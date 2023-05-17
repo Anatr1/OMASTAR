@@ -11,6 +11,7 @@
 #include <iostream>
 #include <toml.hpp>
 #include <Shmem.hpp>
+#include "./utils.h"
 
 //**
 // * @brief Read a PGM map file and return a vector of vectors of integers
@@ -67,6 +68,12 @@ void printMap(vector<vector<int>> map) {
     }
 }
 
+vector<vector<int>> colorPath(vector<vector<int>> map, vector<xy> path) {
+    for (auto point : path) {
+        map[point.x][point.y] = 255;
+    }
+    return map;
+}
 
 
 #endif //__OMASTAR_PGM_H__
