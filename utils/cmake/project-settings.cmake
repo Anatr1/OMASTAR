@@ -3,20 +3,18 @@
 #------------------------#
 
 #Project name
-set(DIANA_PROJECT_NAME TemplateProject)
+set(DIANA_PROJECT_NAME OMASTAR)
 
 #Project version
 set(DIANA_PROJECT_VERSION "0.0.1")
 
 #Project Description
-set(DIANA_PROJECT_DESCRIPTION "C++ template for CMake")
+set(DIANA_PROJECT_DESCRIPTION "A* navigation through PGM binary maps")
 
 #Modules in this project. Names must correspond to module names root, CMake
 #Example: set(DIANA_PROJECT_SERVICES MYSERVICE1 anotherModule service2)
 
-set(DIANA_PROJECT_LIBRARIES ExampleLibrary)
-set(DIANA_PROJECT_PROGRAMS ExampleProgram)
-set(DIANA_PROJECT_SERVICES ExampleService)
+set(DIANA_PROJECT_PROGRAMS OMASTAR)
 set(DIANA_PROJECT_TESTS ExampleTest)
 
 

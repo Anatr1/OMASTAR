@@ -9,13 +9,10 @@
 #	ls -l
 
 #This special target is invoked on "make" command (with no args). Feel free to edit it.
-all: build run_ExampleProgram
+all: build run_OMASTAR
 
-run_ExampleProgram:
-	./build/modules/ExampleProgram/ExampleProgram
-
-run_ExampleService:
-	./build/modules/ExampleService/ExampleService
+run_OMASTAR:
+	./build/modules/OMASTAR/OMASTAR
 
 #DEPRECATED
 #This target sets up the docker container. Notice: This kind of commands (make targets with docker build/run commands inside)

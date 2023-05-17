@@ -81,7 +81,7 @@ make docs
 
 ### Other makefile targets
 Set here, if needed, "custom" make targets for the project.
-### Run ExampleProgram
+### Run OMASTAR
 
 ```bash
 make run_OMASTAR
