@@ -22,7 +22,7 @@ include_directories(${MAIN_BUILD_DIR} )
 
 
 #Add executable files
-add_executable(${PROJECT_NAME} main.cpp include/ExampleInclude.cpp include/ExampleInclude.hpp)
+add_executable(${PROJECT_NAME} main.cpp include/utils/pgm.h include/utils/utils.h include/A_star/A_star.h)
 
 #Files inside the include folder can be added via #include "myfile.h" . No need for paths.
 include_directories(include)

@@ -14,6 +14,9 @@ all: build run_OMASTAR
 run_OMASTAR:
 	./build/modules/OMASTAR/OMASTAR
 
+shit:
+	./build/modules/OMASTAR/OMASTAR
+
 #DEPRECATED
 #This target sets up the docker container. Notice: This kind of commands (make targets with docker build/run commands inside)
 # shall ONLY be used by the developer for testing the docker container creation, and NEVER be called by automated processes!

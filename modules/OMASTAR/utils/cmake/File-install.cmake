@@ -118,7 +118,7 @@ foreach(file_dest ${DIANA_MODULE_FILES})
   #set(${file_name} ${file})
   #Append to the list ${MYFILES_DEFINES_INSTALLED} created here the text to be copied in the header file
   list(APPEND MYFILES_DEFINES_INSTALLED "#define ${FILE_NAME_UPPER} \"${DIANA_MODULE_ROOTPATH}/${PROJECT_NAME}/${DEST}/${file_name}\"")
-  #replace the \n caracter (contained in ${MYFILES_DEFINES_INSTALLED}, a space is added when a new variable is appended) with ";"
+  #replace the \n character (contained in ${MYFILES_DEFINES_INSTALLED}, a space is added when a new variable is appended) with ";"
   string(REPLACE ";" "\n" MYFILES_DEFINES_INSTALLED "${MYFILES_DEFINES_INSTALLED}")
 
   message("adding file ${FILE} to project.\n\tWill be installed in ${DIANA_MODULE_ROOTPATH}/${PROJECT_NAME}/${DEST}\n\tWill be #defined as ${Cyan}${FILE_NAME_UPPER}${ColourReset} in ${PROJECT_NAME}_cmakevariables.h")

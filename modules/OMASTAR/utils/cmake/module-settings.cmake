@@ -11,6 +11,8 @@ set(DIANA_MODULE_CONFIG_FILES ./config/config.toml)
 # WARNING! Be sure to specify both variables!
 set(DIANA_MODULE_FILES
     "./exampleDirectory/ExampleFile.txt /exampleDirectory"
+    "./maps/test_3x3 /maps"
+    "./maps/binmap_30x20 /maps"
     # "a/path/to/file.txt the/destination/directory";
     # "../some/relative/path/file.txt /a/destionation/directory"
     )
