@@ -60,13 +60,14 @@ vector<vector<int>> readPGMmap(string filename) {
 }
 
 void printMap(vector<vector<int>> map) {
-    cout << "Printing map" << endl;
+    cout << "\nPrinting map" << endl;
     for (auto row : map) {
         for (auto cell : row) {
             cout << cell << " ";
         }
         cout << endl;
     }
+    cout << endl;
 }
 
 vector<vector<int>> colorPath(vector<vector<int>> map, vector<xy> path) {

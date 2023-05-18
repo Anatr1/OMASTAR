@@ -24,6 +24,8 @@ int main(void) {
 
     cout << "Map size: " << map.size() << "x" << map[0].size() << endl;
 
+    printMap(map);
+
     xy start = generateRandomPoint(map.size(), map[0].size());
     xy goal = generateRandomPoint(map.size(), map[0].size());
 
@@ -37,11 +39,11 @@ int main(void) {
         cout << p.x << " " << p.y << endl;
     }
 
-    map = colorPath(map, path);
+    //map = colorPath(map, path);
 
-    printMap(map);
+    //printMap(map);
 
-    exportToPGM(map);
+    //exportToPGM(map);
 
-    return 0;
+    //return 0;
 }
