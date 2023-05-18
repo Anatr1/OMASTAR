@@ -13,17 +13,18 @@
 #include <Shmem.hpp>
 #include "./utils.h"
 
-//**
-// * @brief Read a PGM map file and return a vector of vectors of integers
-// * Example of a PGM map file:
-// * P2
-// * 3 3
-// * 255
-// * 0 0 0
-// * 0 255 0
-// * 0 0 0
-// * @param filename
-// * @return vector<vector<int>>
+/**
+ * @brief Read a PGM map file and return a vector of vectors of integers
+ * Example of a PGM map file:
+ * P2
+ * 3 3
+ * 255
+ * 0 0 0
+ * 0 255 0
+ * 0 0 0
+ * @param filename
+ * @return vector<vector<int>>
+ */
 vector<vector<int>> readPGMmap(string filename) {
     ifstream file(filename);
     string line;
@@ -75,5 +76,29 @@ vector<vector<int>> colorPath(vector<vector<int>> map, vector<xy> path) {
     return map;
 }
 
+void exportToPGM(vector<vector<int>> map){
+    FILE *imageFile;
+
+    imageFile=fopen("map.pgm","wb");
+    if(imageFile==NULL){
+        perror("ERROR: Cannot open output file");
+        exit(EXIT_FAILURE);
+    }
+    cout << "Exporting map to map.pgm" << endl;
+    cout << "Map size: " << map.size() << "x" << map[0].size() << endl;
+
+    fprintf(imageFile,"P2\n"); //Magic Number
+    fprintf(imageFile, "%d %d\n", map.size(), map[0].size()); //Dimensions
+    fprintf(imageFile, "%d\n", 255); //Dimensions
+    for(int i = 0; i < map.size(); i++){
+        for(int j = 0; j < map[0].size(); j++){
+            fprintf(imageFile, "%d ", map[i][j]);
+        }
+        fprintf(imageFile, "\n");
+    }
+
+    cout << "Map exported to map.pgm" << endl;
+    fclose(imageFile);
+}
 
 #endif //__OMASTAR_PGM_H__
