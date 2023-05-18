@@ -12,6 +12,8 @@
 #include <toml.hpp>
 #include <Shmem.hpp>
 #include "./utils.h"
+#include <noise/noise.h>
+#include <noise/module/perlin.h>
 
 /**
  * @brief Read a PGM map file and return a vector of vectors of integers
@@ -77,10 +79,10 @@ vector<vector<int>> colorPath(vector<vector<int>> map, vector<xy> path) {
     return map;
 }
 
-void exportToPGM(vector<vector<int>> map){
+void exportToPGM(vector<vector<int>> map, char* filename) {
     FILE *imageFile;
 
-    imageFile=fopen("map.pgm","wb");
+    imageFile=fopen(filename,"wb");
     if(imageFile==NULL){
         perror("ERROR: Cannot open output file");
         exit(EXIT_FAILURE);
@@ -100,6 +102,17 @@ void exportToPGM(vector<vector<int>> map){
 
     cout << "Map exported to map.pgm" << endl;
     fclose(imageFile);
+}
+
+vector<vector<int>> generatePerlinNoiseMap(int rows, int cols, int maxVal) {
+    vector<vector<int>> map;
+    map.resize(rows, vector<int>(cols));
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; ++j) {
+            map[i][j] = (int) (maxVal * noise(i, j));
+        }
+    }
+    return map;
 }
 
 #endif //__OMASTAR_PGM_H__

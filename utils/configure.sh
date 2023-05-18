@@ -16,5 +16,7 @@ bash $SCRIPT_DIR/install/install_shmem.sh
 
 bash $SCRIPT_DIR/install/install_Moquette2.sh
 
+bash $SCRIPT_DIR/install/install_noise.sh
+
 #Add a line with other dependencies installations files
 #bash install/install_exampleDependency.sh

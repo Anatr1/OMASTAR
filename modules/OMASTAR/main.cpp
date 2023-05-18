@@ -20,11 +20,11 @@ int main(void) {
             << "Config file path is " << DIANA_OMASTAR_CFG_FILE_CONFIG_TOML << endl
             << "Installation folder is " << DIANA_OMASTAR_MODULE_ROOTPATH << endl<< endl;
 
-    vector<vector<int>> map = readPGMmap(DIANA_OMASTAR_FILE_TEST_3X3);
-
+    //vector<vector<int>> map = readPGMmap(DIANA_OMASTAR_FILE_BINMAP_30X20);
+    vector<vector<int>> map = generateNoiseMap(300, 400, 255);
+    exportToPGM(map, "map.pgm");
+    /*
     cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
-
-    printMap(map);
 
     xy start = generateRandomPoint(map.size(), map[0].size());
     xy goal = generateRandomPoint(map.size(), map[0].size());
@@ -34,16 +34,14 @@ int main(void) {
 
     vector<xy> path = a_star(map, start, goal);
 
-    cout << "Path: " << endl;
+    cout << "   Path: " << endl;
     for (auto p : path) {
-        cout << p.x << " " << p.y << endl;
+        cout << "   " << p.x << " " << p.y << endl;
     }
 
     map = colorPath(map, path);
 
-    printMap(map);
-
-    exportToPGM(map);
-
+    exportToPGM(map, "map.pgm");
+    */
     return 0;
 }

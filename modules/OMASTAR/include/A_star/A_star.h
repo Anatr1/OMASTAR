@@ -67,10 +67,10 @@ vector<xy> reconstructPath(Node* current) {
  * @return
  */
 vector<xy> a_star(vector<vector<int>>& map, xy start, xy goal) {
-    cout << "A* algorithm" << endl;
-    cout << "Map size: " << map.size() << " " << map[0].size() << endl;
-    cout << "Start: " << start.x << " " << start.y << endl;
-    cout << "Goal: " << goal.x << " " << goal.y << endl;
+    cout << "---- A* algorithm ----" << endl;
+    cout << "   Map size: " << map.size() << " " << map[0].size() << endl;
+    cout << "   Start: " << start.x << " " << start.y << endl;
+    cout << "   Goal: " << goal.x << " " << goal.y << endl;
     vector<xy> path;
     int rows = map.size();
     int cols = map[0].size();
