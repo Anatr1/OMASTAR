@@ -22,7 +22,7 @@ int main(void) {
 
     vector<vector<int>> map = readPGMmap(DIANA_OMASTAR_FILE_TEST_3X3);
 
-    cout << "Map size: " << map.size() << "x" << map[0].size() << endl;
+    cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
 
     printMap(map);
 
@@ -39,11 +39,11 @@ int main(void) {
         cout << p.x << " " << p.y << endl;
     }
 
-    //map = colorPath(map, path);
+    map = colorPath(map, path);
 
-    //printMap(map);
+    printMap(map);
 
-    //exportToPGM(map);
+    exportToPGM(map);
 
-    //return 0;
+    return 0;
 }

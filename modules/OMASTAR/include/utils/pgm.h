@@ -40,7 +40,7 @@ vector<vector<int>> readPGMmap(string filename) {
         getline(file, line);
         //cout << line << endl;
         stringstream ss(line);
-        ss >> rows >> cols;
+        ss >> cols >> rows;
         getline(file, line);
         stringstream ss2(line);
         ss2 >> maxVal;
@@ -86,10 +86,10 @@ void exportToPGM(vector<vector<int>> map){
         exit(EXIT_FAILURE);
     }
     cout << "Exporting map to map.pgm" << endl;
-    cout << "Map size: " << map.size() << "x" << map[0].size() << endl;
+    cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
 
     fprintf(imageFile,"P2\n"); //Magic Number
-    fprintf(imageFile, "%d %d\n", map.size(), map[0].size()); //Dimensions
+    fprintf(imageFile, "%d %d\n", map[0].size(), map.size()); //Dimensions
     fprintf(imageFile, "%d\n", 255); //Dimensions
     for(int i = 0; i < map.size(); i++){
         for(int j = 0; j < map[0].size(); j++){
