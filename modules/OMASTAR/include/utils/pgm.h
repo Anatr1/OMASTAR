@@ -79,10 +79,10 @@ vector<vector<int>> colorPath(vector<vector<int>> map, vector<xy> path) {
     return map;
 }
 
-void exportToPGM(vector<vector<int>> map, char* filename) {
+void exportToPGM(vector<vector<int>> map, std::string filename) {
     FILE *imageFile;
 
-    imageFile=fopen(filename,"wb");
+    imageFile=fopen(filename.c_str(),"wb");
     if(imageFile==NULL){
         perror("ERROR: Cannot open output file");
         exit(EXIT_FAILURE);
@@ -100,7 +100,7 @@ void exportToPGM(vector<vector<int>> map, char* filename) {
         fprintf(imageFile, "\n");
     }
 
-    cout << "Map exported to map.pgm" << endl;
+    cout << "Map exported to map.pgm\n\n" << endl;
     fclose(imageFile);
 }
 
@@ -119,6 +119,21 @@ vector<vector<int>> generatePerlinNoiseMap(int rows, int cols, int maxVal) {
         }
     }
     return map;
+}
+
+vector<vector<int>> filterMap(vector<vector<int>> map, int threshold) {
+    vector<vector<int>> filteredMap;
+    filteredMap.resize(map.size(), vector<int>(map[0].size()));
+    for (int i = 0; i < map.size(); ++i) {
+        for (int j = 0; j < map[0].size(); ++j) {
+            if (map[i][j] > threshold) {
+                filteredMap[i][j] = 128;
+            } else {
+                filteredMap[i][j] = 0;
+            }
+        }
+    }
+    return filteredMap;
 }
 
 #endif //__OMASTAR_PGM_H__

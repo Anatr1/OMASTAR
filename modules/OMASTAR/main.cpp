@@ -14,34 +14,37 @@
 using namespace std;
 
 int main(void) {
+    srand(time(0));
     //prints some project variables, defined in <buildfolder>/project_cmakevariables.h and <buildfolder>/<moduleName>_cmakevariables.h
     cout << DIANA_OMASTAR_PROJECT_NAME << " from project "<<DIANA_PROJECT_NAME<<" version " << DIANA_PROJECT_VERSION << endl
             << "Example file path is "<< DIANA_OMASTAR_FILE_EXAMPLEFILE_TXT << endl
             << "Config file path is " << DIANA_OMASTAR_CFG_FILE_CONFIG_TOML << endl
             << "Installation folder is " << DIANA_OMASTAR_MODULE_ROOTPATH << endl<< endl;
 
-    //vector<vector<int>> map = readPGMmap(DIANA_OMASTAR_FILE_BINMAP_30X20);
-    vector<vector<int>> map = generatePerlinNoiseMap(720, 1080, 255);
-    exportToPGM(map, "map.pgm");
-    /*
-    cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
+    for (int i = 0; i < 20; i++) {
+        srand(time(0) + i);
+        cout << "Iteration " << i << endl;
+        vector<vector<int>> map = generatePerlinNoiseMap(2000, 2000, 255);
+        map = filterMap(map, 100);
 
-    xy start = generateRandomPoint(map.size(), map[0].size());
-    xy goal = generateRandomPoint(map.size(), map[0].size());
+        cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
 
-    cout << "Start: " << start.x << " " << start.y << endl;
-    cout << "Goal: " << goal.x << " " << goal.y << endl;
+        xy start = generateRandomPoint(map[0].size(), map.size(), map);
+        xy goal = generateRandomPoint(map[0].size(), map.size(), map);
 
-    vector<xy> path = a_star(map, start, goal);
+        cout << "Start: " << start.x << " " << start.y << endl;
+        cout << "Goal: " << goal.x << " " << goal.y << endl;
 
-    cout << "   Path: " << endl;
-    for (auto p : path) {
-        cout << "   " << p.x << " " << p.y << endl;
+        vector<xy> path = a_star(map, start, goal);
+
+        map = colorPath(map, path);
+
+        string filename = "map_path_" + to_string(i) + ".pgm";
+
+        exportToPGM(map, filename);
+
+        sleep(1);
     }
 
-    map = colorPath(map, path);
-
-    exportToPGM(map, "map.pgm");
-    */
     return 0;
 }

@@ -115,9 +115,8 @@ vector<xy> a_star(vector<vector<int>>& map, xy start, xy goal) {
     }
 
     // If the open set becomes empty and the goal is not reached, return an empty path
+    cout << "   GOAL NOT REACHABLE" << endl;
     return {};
-    // A* algorithm
-
 }
 
 #endif //__OMASTAR_A_STAR_H__

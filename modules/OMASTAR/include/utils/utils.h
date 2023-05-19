@@ -12,13 +12,21 @@ struct xy {
     int x,y;
 };
 
-xy generateRandomPoint(int max_x, int max_y){
+/**
+ * @brief Choose a random point in the map that is not an obstacle (map[y][x] != 0)
+ * @param max_x Maximum x coordinate
+ * @param max_y Maximum y coordinate
+ * @param map Map of the environment
+ * @return xy struct with the coordinates of the point
+ */
+xy generateRandomPoint(int max_x, int max_y, vector<vector<int>> map){
     xy point;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 100);
-    point.x = dis(gen) % max_x;
-    point.y = dis(gen) % max_y;
+    point.x = rand() % max_x;
+    point.y = rand() % max_y;
+    while(map[point.x][point.y] == 0){
+        point.x = rand() % max_x;
+        point.y = rand() % max_y;
+    }
     return point;
 }
 
