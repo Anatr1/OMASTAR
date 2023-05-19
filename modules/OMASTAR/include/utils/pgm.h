@@ -14,6 +14,7 @@
 #include "./utils.h"
 #include <noise/noise.h>
 #include <noise/module/perlin.h>
+#include <cmath>
 
 /**
  * @brief Read a PGM map file and return a vector of vectors of integers
@@ -87,7 +88,6 @@ void exportToPGM(vector<vector<int>> map, std::string filename) {
         perror("ERROR: Cannot open output file");
         exit(EXIT_FAILURE);
     }
-    cout << "Exporting map to map.pgm" << endl;
     cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
 
     fprintf(imageFile,"P2\n"); //Magic Number
@@ -100,15 +100,16 @@ void exportToPGM(vector<vector<int>> map, std::string filename) {
         fprintf(imageFile, "\n");
     }
 
-    cout << "Map exported to map.pgm\n\n" << endl;
+    cout << "Map exported to " << filename << "\n\n" << endl;
     fclose(imageFile);
 }
 
-vector<vector<int>> generatePerlinNoiseMap(int rows, int cols, int maxVal) {
+vector<vector<int>> generatePerlinNoiseMap(int rows, int cols, int maxVal, double frequency) {
     vector<vector<int>> map;
     noise::module::Perlin perlinModule;
     srand(time(0));
     perlinModule.SetSeed(time(0));
+    perlinModule.SetFrequency(std::fmod(frequency,16.0));
     map.resize(rows, vector<int>(cols));
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; ++j) {

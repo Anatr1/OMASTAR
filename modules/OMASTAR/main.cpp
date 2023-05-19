@@ -21,10 +21,10 @@ int main(void) {
             << "Config file path is " << DIANA_OMASTAR_CFG_FILE_CONFIG_TOML << endl
             << "Installation folder is " << DIANA_OMASTAR_MODULE_ROOTPATH << endl<< endl;
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 15; i++) {
         srand(time(0) + i);
         cout << "Iteration " << i << endl;
-        vector<vector<int>> map = generatePerlinNoiseMap(2000, 2000, 255);
+        vector<vector<int>> map = generatePerlinNoiseMap(2000, 2000, 255, (double)i+1);
         map = filterMap(map, 100);
 
         cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
@@ -39,7 +39,7 @@ int main(void) {
 
         map = colorPath(map, path);
 
-        string filename = "map_path_" + to_string(i) + ".pgm";
+        string filename = "map_path_frequency_" + to_string(i) + ".pgm";
 
         exportToPGM(map, filename);
 
