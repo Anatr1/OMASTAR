@@ -21,7 +21,7 @@ int main(void) {
             << "Installation folder is " << DIANA_OMASTAR_MODULE_ROOTPATH << endl<< endl;
 
     //vector<vector<int>> map = readPGMmap(DIANA_OMASTAR_FILE_BINMAP_30X20);
-    vector<vector<int>> map = generateNoiseMap(300, 400, 255);
+    vector<vector<int>> map = generatePerlinNoiseMap(720, 1080, 255);
     exportToPGM(map, "map.pgm");
     /*
     cout << "Map size: " << map[0].size() << "x" << map.size() << endl;

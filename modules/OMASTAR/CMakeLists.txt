@@ -37,6 +37,7 @@ target_link_libraries(${PROJECT_NAME}
                       rt              #rt, needed by SHMEM
                       Shmem          #DIANA Shared Memory Library
                       Moquette2
+                      noise
                       # Add a line here to link libraries
                       )
 

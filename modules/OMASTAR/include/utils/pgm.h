@@ -106,10 +106,16 @@ void exportToPGM(vector<vector<int>> map, char* filename) {
 
 vector<vector<int>> generatePerlinNoiseMap(int rows, int cols, int maxVal) {
     vector<vector<int>> map;
+    noise::module::Perlin perlinModule;
+    srand(time(0));
+    perlinModule.SetSeed(time(0));
     map.resize(rows, vector<int>(cols));
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; ++j) {
-            map[i][j] = (int) (maxVal * noise(i, j));
+            double x = (double)j/((double)cols);
+            double y = (double)i/((double)rows);
+            double val = perlinModule.GetValue(x, y, 0.0);
+            map[i][j] = (int)((val + 1.0) * 0.5 * (double)maxVal);
         }
     }
     return map;
