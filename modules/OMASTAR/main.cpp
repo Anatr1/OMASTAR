@@ -24,7 +24,7 @@ int main(void) {
     for (int i = 0; i < 15; i++) {
         srand(time(0) + i);
         cout << "Iteration " << i << endl;
-        vector<vector<int>> map = generatePerlinNoiseMap(2000, 2000, 255, (double)i+1);
+        vector<vector<int>> map = generatePerlinNoiseMap(50, 50, 255, (double)i+1);
         map = filterMap(map, 100);
 
         cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
@@ -37,11 +37,24 @@ int main(void) {
 
         vector<xy> path = a_star(map, start, goal);
 
+        cout << "Path:" << endl;
+        for (auto point : path) {
+            cout << point.x << " " << point.y << endl;
+        }
+
         map = colorPath(map, path);
 
         string filename = "map_path_frequency_" + to_string(i) + ".pgm";
 
         exportToPGM(map, filename);
+
+        if (path.size() > 0) {
+            path = translatePath(path);
+            cout << "Translated path:" << endl;
+            for (auto point: path) {
+                cout << point.x << " " << point.y << endl;
+            }
+        }
 
         sleep(1);
     }

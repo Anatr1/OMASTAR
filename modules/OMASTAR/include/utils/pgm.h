@@ -15,6 +15,7 @@
 #include <noise/noise.h>
 #include <noise/module/perlin.h>
 #include <cmath>
+#include <vector>
 
 /**
  * @brief Read a PGM map file and return a vector of vectors of integers
@@ -62,6 +63,11 @@ vector<vector<int>> readPGMmap(string filename) {
     return map;
 }
 
+
+/**
+ * @brief Print a map to the console -> unpractical for large maps
+ * @param map
+ */
 void printMap(vector<vector<int>> map) {
     cout << "\nPrinting map" << endl;
     for (auto row : map) {
@@ -73,6 +79,12 @@ void printMap(vector<vector<int>> map) {
     cout << endl;
 }
 
+/**
+ * @brief Highlight a path in a map by coloring the cells in the path in white
+ * @param map vector of vectors of integers
+ * @param path vector of xy structs with the coordinates of the path
+ * @return vector<vector<int>> map
+ */
 vector<vector<int>> colorPath(vector<vector<int>> map, vector<xy> path) {
     for (auto point : path) {
         map[point.x][point.y] = 255;
@@ -80,6 +92,11 @@ vector<vector<int>> colorPath(vector<vector<int>> map, vector<xy> path) {
     return map;
 }
 
+/**
+ * @brief Export a map to a PGM file
+ * @param map vector of vectors of integers
+ * @param filename name of the file to be created
+ */
 void exportToPGM(vector<vector<int>> map, std::string filename) {
     FILE *imageFile;
 
@@ -104,6 +121,14 @@ void exportToPGM(vector<vector<int>> map, std::string filename) {
     fclose(imageFile);
 }
 
+/**
+ * @brief Generate a map with Perlin noise
+ * @param rows number of rows of the map
+ * @param cols number of columns of the map
+ * @param maxVal maximum value of the map
+ * @param frequency frequency of the Perlin noise
+ * @return vector<vector<int>> map
+ */
 vector<vector<int>> generatePerlinNoiseMap(int rows, int cols, int maxVal, double frequency) {
     vector<vector<int>> map;
     noise::module::Perlin perlinModule;
@@ -122,6 +147,12 @@ vector<vector<int>> generatePerlinNoiseMap(int rows, int cols, int maxVal, doubl
     return map;
 }
 
+/**
+ * @brief Filter a map by a threshold to obtain a binary map
+ * @param map  vector of vectors of integers
+ * @param threshold threshold value
+ * @return vector<vector<int>> filtered map
+ */
 vector<vector<int>> filterMap(vector<vector<int>> map, int threshold) {
     vector<vector<int>> filteredMap;
     filteredMap.resize(map.size(), vector<int>(map[0].size()));
@@ -137,4 +168,18 @@ vector<vector<int>> filterMap(vector<vector<int>> map, int threshold) {
     return filteredMap;
 }
 
+
+/**
+ * @brief Translate a path so that it always starts at (0,0) by subtracting to each point the coordinates of the first point
+ * @param path vector of xy structs with the coordinates of the path
+ * @return vector<vector<xy>> translated path
+ */
+vector<xy> translatePath(vector<xy> path) {
+    vector<xy> translatedPath;
+    xy firstPoint = path[0];
+    for (auto point : path) {
+        translatedPath.push_back({point.x - firstPoint.x, point.y - firstPoint.y});
+    }
+    return translatedPath;
+}
 #endif //__OMASTAR_PGM_H__
