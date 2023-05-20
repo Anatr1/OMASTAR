@@ -35,13 +35,17 @@ bool isValidPoint(xy point, vector<vector<int>>& map) {
     return point.x >= 0 && point.x < rows && point.y >= 0 && point.y < cols;
 }
 
-// Helper function to get the neighboring points of a given point
+// Helper function to get the neighboring points of a given point, including diagonal neighbors
 vector<xy> getNeighbors(xy point) {
     vector<xy> neighbors;
     neighbors.push_back({point.x - 1, point.y}); // Up
     neighbors.push_back({point.x + 1, point.y}); // Down
     neighbors.push_back({point.x, point.y - 1}); // Left
     neighbors.push_back({point.x, point.y + 1}); // Right
+    neighbors.push_back({point.x - 1, point.y - 1}); // Up Left
+    neighbors.push_back({point.x - 1, point.y + 1}); // Up Right
+    neighbors.push_back({point.x + 1, point.y - 1}); // Down Left
+    neighbors.push_back({point.x + 1, point.y + 1}); // Down Right
     return neighbors;
 }
 
@@ -61,6 +65,7 @@ vector<xy> reconstructPath(Node* current) {
  * Find the shortest path between two points in a map
  * The map is a vector of vectors of integers obtained by reading a PGM map file. Values equal to 0 are occupied cells, values different from 0 are free cells.
  * The start and goal points are xy structures with x and y integer values.
+ * Assume the cost of moving from a cell to another is 1 if the cells are adjacent, sqrt(2) if the cells are diagonal.
  * @param map vector of vectors of integers representing the map
  * @param start xy structure representing the start point
  * @param goal xy structure representing the goal point
@@ -101,7 +106,8 @@ vector<xy> a_star(vector<vector<int>>& map, xy start, xy goal) {
         vector<xy> neighbors = getNeighbors(currentPoint);
         for (const xy& neighbor : neighbors) {
             if (isValidPoint(neighbor, map) && !visited[neighbor.x][neighbor.y] && map[neighbor.x][neighbor.y] != 0) {
-                int newGScore = current->gScore + 1; // Assuming all movements have a cost of 1
+                // Assume adjacent cells have a cost of 1 and diagonal cells have a cost of sqrt(2)
+                int newGScore = current->gScore + (abs(neighbor.x - currentPoint.x) + abs(neighbor.y - currentPoint.y) == 1 ? 1 : 1.414);
 
                 if (newGScore < gScore[neighbor.x][neighbor.y]) {
                     // Update the gScore for the neighbor and add it to the open set
