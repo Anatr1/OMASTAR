@@ -21,11 +21,13 @@ int main(void) {
             << "Config file path is " << DIANA_OMASTAR_CFG_FILE_CONFIG_TOML << endl
             << "Installation folder is " << DIANA_OMASTAR_MODULE_ROOTPATH << endl<< endl;
 
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 1; i++) {
         srand(time(0) + i);
         cout << "Iteration " << i << endl;
-        vector<vector<int>> map = generatePerlinNoiseMap(60, 40, 255, (double)i+1);
+        vector<vector<int>> map = generatePerlinNoiseMap(60, 40, 255, (double)i+2);
+        exportToPGM(map, to_string(i) + "_0_map_raw.pgm");
         map = filterMap(map, 100);
+        exportToPGM(map, to_string(i) + "_1_map_filtered.pgm");
 
         cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
 
@@ -40,13 +42,13 @@ int main(void) {
             map = colorPoint(map, goals[i]);
         }
 
+        exportToPGM(map, to_string(i) + "_2_map_goals.pgm");
+
         vector<xy> path = reachMultipleWaypoints(map, start, goals);
 
         map = colorPath(map, path);
 
-        string filename = "map_path_frequency_" + to_string(i) + ".pgm";
-
-        exportToPGM(map, filename);
+        exportToPGM(map, to_string(i) + "_3_map_path.pgm");
 
         sleep(1);
     }
