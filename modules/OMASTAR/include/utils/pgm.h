@@ -160,7 +160,7 @@ vector<vector<int>> generatePerlinNoiseMap(int rows, int cols, int maxVal, doubl
             double x = (double)j/((double)cols);
             double y = (double)i/((double)rows);
             double val = perlinModule.GetValue(x, y, 0.0);
-            map[i][j] = (int)((val + 1.0) * 0.5 * (double)maxVal);
+            map[i][j] = min(max((int)((val + 1.0) * 0.5 * (double)maxVal), 0), 255);
         }
     }
     return map;

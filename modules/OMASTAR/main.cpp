@@ -24,7 +24,7 @@ int main(void) {
     for (int i = 0; i < 15; i++) {
         srand(time(0) + i);
         cout << "Iteration " << i << endl;
-        vector<vector<int>> map = generatePerlinNoiseMap(2000, 2000, 255, (double)i+1);
+        vector<vector<int>> map = generatePerlinNoiseMap(60, 40, 255, (double)i+1);
         map = filterMap(map, 100);
 
         cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
