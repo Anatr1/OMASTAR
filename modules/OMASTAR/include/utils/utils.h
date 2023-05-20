@@ -30,4 +30,20 @@ xy generateRandomPoint(int max_x, int max_y, vector<vector<int>> map){
     return point;
 }
 
+/**
+ * @brief Generate n random points in the map that are not obstacles
+ * @param max_x Maximum x coordinate
+ * @param max_y Maximum y coordinate
+ * @param map Map of the environment
+ * @param n Number of points to generate
+ * @return vector of xy structs with the coordinates of the points
+ */
+vector<xy> generateRandomPoints(int max_x, int max_y, vector<vector<int>> map, int n){
+    vector<xy> points;
+    for(int i = 0; i < n; i++){
+        points.push_back(generateRandomPoint(max_x, max_y, map));
+    }
+    return points;
+}
+
 #endif //__OMASTAR_UTILS_H__

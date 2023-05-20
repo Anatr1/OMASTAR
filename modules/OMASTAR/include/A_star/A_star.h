@@ -73,7 +73,6 @@ vector<xy> reconstructPath(Node* current) {
  */
 vector<xy> a_star(vector<vector<int>>& map, xy start, xy goal) {
     cout << "---- A* algorithm ----" << endl;
-    cout << "   Map size: " << map.size() << " " << map[0].size() << endl;
     cout << "   Start: " << start.x << " " << start.y << endl;
     cout << "   Goal: " << goal.x << " " << goal.y << endl;
     vector<xy> path;
@@ -123,6 +122,38 @@ vector<xy> a_star(vector<vector<int>>& map, xy start, xy goal) {
     // If the open set becomes empty and the goal is not reached, return an empty path
     cout << "   GOAL NOT REACHABLE" << endl;
     return {};
+}
+
+/**
+ * @brief Reach multiple waypoints and return to the start point
+ * @param map vector of vectors of integers representing the map
+ * @param start xy structure representing the start point
+ * @param waypoints vector of xy structures representing the waypoints
+ * @return
+ */
+vector<xy> reachMultipleWaypoints(vector<vector<int>>& map, xy start, vector<xy> waypoints) {
+    cout << "---- Reach multiple waypoints ----" << endl;
+    cout << "   Start: " << start.x << " " << start.y << endl;
+    cout << "   Waypoints: ";
+    for (const xy& waypoint : waypoints) {
+        cout << waypoint.x << " " << waypoint.y << ", ";
+    }
+    cout << endl;
+
+    vector<xy> path;
+    xy current_point = start;
+    for (const xy& waypoint : waypoints) {
+        vector<xy> partial_path = a_star(map, current_point, waypoint);
+        if (!partial_path.empty()) {
+            path.insert(path.end(), partial_path.begin(), partial_path.end());
+            current_point = waypoint;
+        }
+    }
+    vector<xy> return_path = a_star(map, current_point, start);
+    path.insert(path.end(), return_path.begin(), return_path.end());
+    current_point = start;
+
+    return path;
 }
 
 #endif //__OMASTAR_A_STAR_H__

@@ -93,6 +93,25 @@ vector<vector<int>> colorPath(vector<vector<int>> map, vector<xy> path) {
 }
 
 /**
+ * @brief Highlight a point in a map by coloring the cell in the point and the surroundings in white
+ * @param map vector of vectors of integers
+ * @param point xy struct with the coordinates of the point
+ * @return vector<vector<int>> map
+ */
+vector<vector<int>> colorPoint(vector<vector<int>> map, xy point, bool isStart=false) {
+    int range;
+    isStart ? range = 4 : range = 2;
+    for (int i = point.x - range; i <= point.x + range; i++) {
+        for (int j = point.y - range; j <= point.y + range; j++) {
+            if (i >= 0 && i < map.size() && j >= 0 && j < map[0].size()) {
+                map[i][j] = 255;
+            }
+        }
+    }
+    return map;
+}
+
+/**
  * @brief Export a map to a PGM file
  * @param map vector of vectors of integers
  * @param filename name of the file to be created
