@@ -23,7 +23,7 @@ xy generateRandomPoint(int max_x, int max_y, vector<vector<int>> map){
     xy point;
     point.x = rand() % max_x;
     point.y = rand() % max_y;
-    while(map[point.x][point.y] == 0){
+    while(map[point.y][point.x] == 0){
         point.x = rand() % max_x;
         point.y = rand() % max_y;
     }

@@ -87,7 +87,7 @@ void printMap(vector<vector<int>> map) {
  */
 vector<vector<int>> colorPath(vector<vector<int>> map, vector<xy> path) {
     for (auto point : path) {
-        map[point.x][point.y] = 255;
+        map[point.y][point.x] = 255;
     }
     return map;
 }
@@ -103,8 +103,8 @@ vector<vector<int>> colorPoint(vector<vector<int>> map, xy point, bool isStart=f
     isStart ? range = 4 : range = 2;
     for (int i = point.x - range; i <= point.x + range; i++) {
         for (int j = point.y - range; j <= point.y + range; j++) {
-            if (i >= 0 && i < map.size() && j >= 0 && j < map[0].size()) {
-                map[i][j] = 255;
+            if (i >= 0 && i < map[0].size() && j >= 0 && j < map.size()) {
+                map[j][i] = 255;
             }
         }
     }
@@ -117,6 +117,7 @@ vector<vector<int>> colorPoint(vector<vector<int>> map, xy point, bool isStart=f
  * @param filename name of the file to be created
  */
 void exportToPGM(vector<vector<int>> map, std::string filename) {
+    cout << "Exporting map of size " << map[0].size() << "x" << map.size() << " to " << filename << endl;
     FILE *imageFile;
 
     imageFile=fopen(filename.c_str(),"wb");
@@ -124,13 +125,12 @@ void exportToPGM(vector<vector<int>> map, std::string filename) {
         perror("ERROR: Cannot open output file");
         exit(EXIT_FAILURE);
     }
-    cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
 
     fprintf(imageFile,"P2\n"); //Magic Number
-    fprintf(imageFile, "%d %d\n", map[0].size(), map.size()); //Dimensions
-    fprintf(imageFile, "%d\n", 255); //Dimensions
-    for(int i = 0; i < map.size(); i++){
-        for(int j = 0; j < map[0].size(); j++){
+    fprintf(imageFile, "%d %d\n", map[0].size(), map.size()); // Dimensions -> FIRST COL THEN ROW
+    fprintf(imageFile, "%d\n", 255);
+    for(int i = 0; i < map.size(); i++){ // Iterate over rows
+        for(int j = 0; j < map[0].size(); j++){ // Iterate over columns
             fprintf(imageFile, "%d ", map[i][j]);
         }
         fprintf(imageFile, "\n");
@@ -149,18 +149,38 @@ void exportToPGM(vector<vector<int>> map, std::string filename) {
  * @return vector<vector<int>> map
  */
 vector<vector<int>> generatePerlinNoiseMap(int rows, int cols, int maxVal, double frequency) {
+    cout << "Generating Perlin noise map of size " << cols << "x" << rows << " with frequency " << frequency << endl;
     vector<vector<int>> map;
     noise::module::Perlin perlinModule;
     srand(time(0));
     perlinModule.SetSeed(time(0));
     perlinModule.SetFrequency(std::fmod(frequency,16.0));
     map.resize(rows, vector<int>(cols));
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; i++) { // Iterate over rows
+        for (int j = 0; j < cols; ++j) { // Iterate over columns
             double x = (double)j/((double)cols);
             double y = (double)i/((double)rows);
             double val = perlinModule.GetValue(x, y, 0.0);
             map[i][j] = min(max((int)((val + 1.0) * 0.5 * (double)maxVal), 0), 255);
+        }
+    }
+    return map;
+}
+
+/**
+ * @brief Generate a map alternating vertical stripes of width 1 with values 0 and 255
+ * @param rows number of rows of the map
+ * @param cols number of columns of the map
+ * @param maxVal maximum value of the map
+ * @return vector<vector<int>> map
+ */
+vector<vector<int>> generateVerticalStripedMap(int rows, int cols, int maxVal) {
+    cout << "Generating vertical striped map of size " << cols << "x" << rows << endl;
+    vector<vector<int>> map;
+    map.resize(rows, vector<int>(cols));
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; ++j) {
+            map[i][j] = (j % 2) * maxVal;
         }
     }
     return map;

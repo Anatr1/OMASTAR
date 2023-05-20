@@ -21,30 +21,33 @@ int main(void) {
             << "Config file path is " << DIANA_OMASTAR_CFG_FILE_CONFIG_TOML << endl
             << "Installation folder is " << DIANA_OMASTAR_MODULE_ROOTPATH << endl<< endl;
 
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 15; i++) {
         srand(time(0) + i);
         cout << "Iteration " << i << endl;
-        vector<vector<int>> map = generatePerlinNoiseMap(60, 40, 255, (double)i+2);
+        vector<vector<int>> map = generatePerlinNoiseMap(400, 500, 255, (double)i+1);
         exportToPGM(map, to_string(i) + "_0_map_raw.pgm");
+
+
         map = filterMap(map, 100);
         exportToPGM(map, to_string(i) + "_1_map_filtered.pgm");
 
-        cout << "Map size: " << map[0].size() << "x" << map.size() << endl;
+        cout << "MAP SIZE: " << map[0].size() << "x" << map.size() << endl;
 
         xy start = generateRandomPoint(map[0].size(), map.size(), map);
-        map = colorPoint(map, start, true);
         vector<xy> goals = generateRandomPoints(map[0].size(), map.size(), map, 4);
 
         cout << "Start: " << start.x << " " << start.y << endl;
         cout << "Goals: " << endl;
         for (int i = 0; i < goals.size(); i++) {
             cout << goals[i].x << " " << goals[i].y << endl;
+        }
+        vector<xy> path = reachMultipleWaypoints(map, start, goals);
+
+        map = colorPoint(map, start, true);
+        for (int i = 0; i < goals.size(); i++) {
             map = colorPoint(map, goals[i]);
         }
-
         exportToPGM(map, to_string(i) + "_2_map_goals.pgm");
-
-        vector<xy> path = reachMultipleWaypoints(map, start, goals);
 
         map = colorPath(map, path);
 
