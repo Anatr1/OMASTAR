@@ -21,7 +21,7 @@ int main(void) {
             << "Config file path is " << DIANA_OMASTAR_CFG_FILE_CONFIG_TOML << endl
             << "Installation folder is " << DIANA_OMASTAR_MODULE_ROOTPATH << endl<< endl;
 
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 3; i++) {
         srand(time(0) + i);
         cout << "Iteration " << i << endl;
         vector<vector<int>> map = generatePerlinNoiseMap(400, 500, 255, (double)i+1);
