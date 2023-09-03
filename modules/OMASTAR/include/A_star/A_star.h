@@ -4,6 +4,7 @@
 
 #ifndef __OMASTAR_A_STAR_H__
 #define __OMASTAR_A_STAR_H__
+
 #include "../utils/utils.h"
 #include <vector>
 #include <queue>
