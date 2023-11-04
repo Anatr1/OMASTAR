@@ -21,10 +21,39 @@ int main(void) {
             << "Config file path is " << DIANA_OMASTAR_CFG_FILE_CONFIG_TOML << endl
             << "Installation folder is " << DIANA_OMASTAR_MODULE_ROOTPATH << endl<< endl;
 
+
+    vector<vector<int>> map = readPGMmap("/usr/local/diana/svc/AUTONAV/pgm_maps/map_level0.pgm");
+
+    cout << "MAP SIZE: " << map[0].size() << "x" << map.size() << endl;
+
+    xy start = {150, 155};
+    vector<xy> goals = {{380, 205}};
+
+    cout << "Start: " << start.x << " " << start.y << endl;
+    cout << "Goals: " << endl;
+    for (int i = 0; i < goals.size(); i++) {
+        cout << goals[i].x << " " << goals[i].y << endl;
+    }
+    vector<xy> path = reachMultipleWaypoints(map, start, goals);
+
+    printPath(path);
+
+    map = colorPoint(map, start, true);
+    for (int i = 0; i < goals.size(); i++) {
+        map = colorPoint(map, goals[i]);
+    }
+    exportToPGM(map, "verifica_goals.pgm");
+
+    map = colorPath(map, path);
+
+    exportToPGM(map, "verifica_path.pgm");
+
+
+    /*
     for (int i = 0; i < 3; i++) {
         srand(time(0) + i);
         cout << "Iteration " << i << endl;
-        vector<vector<int>> map = generatePerlinNoiseMap(400, 500, 255, (double)i+1);
+        vector<vector<int>> map = generatePerlinNoiseMap(500, 600, 255, (double)i+1);
         exportToPGM(map, to_string(i) + "_0_map_raw.pgm");
 
 
@@ -55,6 +84,6 @@ int main(void) {
 
         sleep(1);
     }
-
+    */
     return 0;
 }

@@ -194,11 +194,19 @@ vector<xy> reachMultipleWaypoints(vector<vector<int>>& map, xy start, vector<xy>
             current_point = waypoint;
         }
     }
-    vector<xy> return_path = a_star(map, current_point, start);
-    path.insert(path.end(), return_path.begin(), return_path.end());
-    current_point = start;
+    // Not returning to start
+    //vector<xy> return_path = a_star(map, current_point, start);
+    //path.insert(path.end(), return_path.begin(), return_path.end());
+    //current_point = start;
 
     return path;
+}
+
+void printPath(vector<xy> path) {
+    cout << "Path:" << endl;
+    for (const xy& point : path) {
+        cout << point.x << " " << point.y << endl;
+    }
 }
 
 #endif //__OMASTAR_A_STAR_H__
